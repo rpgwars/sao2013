@@ -31,22 +31,29 @@ public class Main {
 	public static void main(String[] args){
 		
 		
-		SolutionSet test = new ContinousSolutionsSet(10, 1, new ObjectiveFunction() {
+		SolutionSet test = new ContinousSolutionsSet(20, 1, new ObjectiveFunction() {
 				
 				@Override
 				public double[] getObjectiveSpaceSolutionValues(Solution solution) {
 					double[] objV = new double[2];
-					objV[0] = solution.getDecisionVector();
-					objV[1] = (Math.cos(6*solution.getDecisionVector())+1)/2;
+					objV[0] = 0.4;
+					objV[1] = (Math.cos(13*solution.getDecisionVector())+1)/2;
+//					objV[0] = 0.3;
+//					if(solution.getDecisionVector() < 0.3)
+//						objV[1] = solution.getDecisionVector();
+//					if(solution.getDecisionVector() > 0.7)
+//						objV[1] = 1 - solution.getDecisionVector();
+//					if(solution.getDecisionVector() > 0.3 && solution.getDecisionVector() < 0.7)
+//						objV[1] = 0.3;
 					return objV; 
 				}
 			},Optimization.MAXIMALIZATION,0,0); 
 		
+		
+		
+		test.mutate(1.0, 0, 0.9, 0, 5);
+		System.out.println("---------------------------------");
 		test.printFitness();
-		
-		test.mutate(1, 0, 0.2, 1, 20);
-		
-		//test.printFitness();
 		
 		
 	}

@@ -203,7 +203,7 @@ public class ContinousSolutionsSet implements SolutionSet{
 			
 			
 			mergeSets(newSet);
-			this.printFitness();
+			//this.printFitness();
 			
 		}
 		
@@ -220,35 +220,39 @@ public class ContinousSolutionsSet implements SolutionSet{
 		FitnessEvaluator fitnessEvaluator = new FitnessEvaluator();
 		Collections.sort(solutions);
 		
+		
 		fitnessEvaluator.assignFitness(size, optimization, horizontalBoundary, verticalBoundary, this);
 
+		
+		
 		List<Solution> dominatedSolutions = optimization.removeDominatedSolutions(solutions);
 		
 		
 		
 		//za duzo niezdominowanych 
 		if(solutions.size() > size){
+			
 			Collections.sort(solutions,new SolutionFitnessComparator());
 			
 			Iterator<Solution> it = solutions.iterator();
 			while(solutions.size() > size){
 
 				Solution x = it.next();
-				//System.out.println("usunieto " + x.getFitness());
 				it.remove();
 				
 			}
-			//for(Solution sol : solutions)
-			//	System.out.println("zostalo " + sol.getFitness() + " " + sol.getDecisionVector());
+			
 			
 		}
 		//za malo niezdominowanych
 		else if(solutions.size() < size){
+			
 			Collections.sort(dominatedSolutions, new SolutionFitnessComparator());
 			Iterator<Solution> it = dominatedSolutions.iterator();
 			while(dominatedSolutions.size() > size - solutions.size()){
 				it.next();
 				it.remove();
+				
 				
 			}
 			solutions.addAll(dominatedSolutions);
@@ -273,6 +277,7 @@ public class ContinousSolutionsSet implements SolutionSet{
 
 	@Override
 	public void printFitness() {
+		
 		FitnessEvaluator fe = new FitnessEvaluator();
 		fe.assignFitness(size, optimization, horizontalBoundary, verticalBoundary, this);
 		double totalF = 0; 
@@ -281,6 +286,7 @@ public class ContinousSolutionsSet implements SolutionSet{
 			totalF+=solution.getFitness();
 		}
 		System.out.println("total " + totalF);
+		
 	}
 
 	

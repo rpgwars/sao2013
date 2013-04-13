@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.sun.xml.internal.bind.v2.runtime.reflect.Accessor.SetterOnlyReflection;
+
 import pl.agh.edu.moea.main.Optimization;
 import pl.agh.edu.moea.set.Solution;
 import pl.agh.edu.moea.set.SolutionSet;
@@ -72,10 +74,12 @@ public class FitnessEvaluator {
 				tmp.addAll(randomSolutions);
 				tmp.addAll(dominatedSolutions);
 		
-//				System.out.println("total " + totalSetFitness);
-//				System.out.println("remaining " + remainingFitness);
-				totalFitness += computeAlpha(i+1, solutions.size(), nrOfSolutionsToBeRemoved)*(totalSetFitness-remainingFitness)/(double)(i+1);
+
 				
+				//System.out.println("partial fit " + solution.getDecisionVector() + " " + x);
+				totalFitness += computeAlpha(i+1, solutions.size(), nrOfSolutionsToBeRemoved)*(totalSetFitness-remainingFitness)/(double)(i+1);
+				//if(i - 1 == nrOfSolutionsToBeRemoved)
+					
 				//System.out.println(solutions.get(1).getDecisionVector());
 				/* 
 				for(Solution dominatingSolution : randomSolutions){
@@ -143,8 +147,11 @@ public class FitnessEvaluator {
 	private double computeAlpha(int i, int sizeOfSet, int nrOfSolutionsToBeRemoved){
 		
 		double alpha = 1; 
-		for(int j = 1; j<i; j++)
-			alpha*=(nrOfSolutionsToBeRemoved - j)/(sizeOfSet - j);
+		for(int j = 1; j<i; j++){
+			alpha*=(double)(nrOfSolutionsToBeRemoved - j)/(double)(sizeOfSet - j);
+		
+		}
+		
 		return alpha;
 		
 	}
