@@ -222,16 +222,16 @@ public class ContinousSolutionsSet implements SolutionSet{
 		
 		
 		fitnessEvaluator.assignFitness(size, optimization, horizontalBoundary, verticalBoundary, this);
-
+		
 		
 		
 		List<Solution> dominatedSolutions = optimization.removeDominatedSolutions(solutions);
 		
-		
-		
+		Collections.shuffle(solutions);
+		Collections.shuffle(dominatedSolutions);
+	
 		//za duzo niezdominowanych 
 		if(solutions.size() > size){
-			
 			Collections.sort(solutions,new SolutionFitnessComparator());
 			
 			Iterator<Solution> it = solutions.iterator();
