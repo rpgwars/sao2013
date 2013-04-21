@@ -23,6 +23,14 @@ public class ContinousSolution implements Solution{
 	public ContinousSolution(){
 		
 	}
+	
+	@Override
+	public Solution getSolutionCopy() {
+		ContinousSolution copy = new ContinousSolution();
+		copy.setObjectiveFunction(getObjectiveFunction());
+		copy.setDecisionVector(getDecisionVector());
+		return copy;
+	}
 
 
 	@Override
@@ -69,19 +77,31 @@ public class ContinousSolution implements Solution{
 	}
 
 
-
-
 	@Override
 	public void setObjectiveFunction(ObjectiveFunction objectiveFunction) {
 		this.objectiveFunction = objectiveFunction;
 	}
 
 	@Override
-	public ObjectiveFunction getObjectiveFunction() {
-		
+	public ObjectiveFunction getObjectiveFunction() {	
 		return objectiveFunction;
 	}
+
 	
+	@Override 
+	public boolean equals(Object solution){
+		
+		if(!(solution instanceof ContinousSolution))
+			return false; 
+		
+		ContinousSolution anotherSolution = (ContinousSolution)solution;
+		
+		if(anotherSolution.objectiveFunction != objectiveFunction)
+			return false; 
+		if(anotherSolution.solution != this.solution)
+			return false; 
+		return true; 
+	}
 	
 	
 	

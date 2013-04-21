@@ -12,7 +12,9 @@ public interface SolutionSet {
 	SolutionSet spawnNewSetThroughBinaryTournament(); 
 	void doBinaryCrossover(double probability, double[] boundaries);
 	void mutate(double upperBoud, double lowerBound, double probabilityOfMutation, int distributionIndex, int nrOfGenerations);
-	public void printFitness();
+	void printFitness();
+	SolutionSet getSetCopy();
+	
 	
 
 }

@@ -42,6 +42,19 @@ public class ContinousSolutionsSet implements SolutionSet{
 		random = new Random(); 
 	
 	}
+	
+	public ContinousSolutionsSet(Optimization optimization, 
+			double horizontalBoundary, double verticalBoundary, List<Solution> solutionList){
+		this.solutions = solutionList; 
+		this.size = solutionList.size();
+		
+		this.optimization = optimization;
+		this.horizontalBoundary = horizontalBoundary;
+		this.verticalBoundary = verticalBoundary;
+		
+		random = new Random(); 
+			
+	}
 
 	public ContinousSolutionsSet(List<Solution> matingSolutionList){
 		   random = new Random(); 
@@ -49,6 +62,18 @@ public class ContinousSolutionsSet implements SolutionSet{
 		   solutions = matingSolutionList;
 	}
 
+	@Override
+	public SolutionSet getSetCopy() {
+		
+		List<Solution> solutionCopies = new ArrayList<Solution>(); 
+		for(Solution solution : solutions)
+			solutionCopies.add(solution.getSolutionCopy());
+		return new ContinousSolutionsSet(optimization, 
+				horizontalBoundary, verticalBoundary, solutionCopies);
+	}
+	
+	
+	
 	
 	@Override
 	public List<Solution> getRandomSolutions(int nrOfSolutionsToRemove, int alredyChosenSolution){
@@ -289,7 +314,30 @@ public class ContinousSolutionsSet implements SolutionSet{
 		
 	}
 
-	
+	@Override
+	public boolean equals(Object solutionsSet){
+		
+		if(!(solutionsSet instanceof ContinousSolutionsSet))
+			return false;
+		
+		ContinousSolutionsSet css = (ContinousSolutionsSet)solutionsSet;
+		
+		List<Solution> anotherSet = css.getSolutions();
+		for(Solution solution : solutions)
+			if(!anotherSet.contains(solution))
+				return false;
+		
+		if(anotherSet.size() != solutions.size())
+			return false; 
+		
+		if(this.horizontalBoundary != css.horizontalBoundary)
+			return false;
+		if(this.verticalBoundary != css.verticalBoundary)
+			return false; 
+		
+		return true; 
+		
+	}
 	
 
 }

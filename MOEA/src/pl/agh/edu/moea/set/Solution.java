@@ -11,5 +11,6 @@ public interface Solution extends Comparable<Solution>{
 	void setFitness(double fitness); 
 	void setObjectiveFunction(ObjectiveFunction objectiveFunction);
 	ObjectiveFunction getObjectiveFunction();
+	public Solution getSolutionCopy();
 	
 }
