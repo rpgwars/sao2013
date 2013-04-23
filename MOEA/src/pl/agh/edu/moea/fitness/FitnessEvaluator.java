@@ -121,6 +121,20 @@ public class FitnessEvaluator {
 	}
 	
 	
+	public double computeObjectiveSpaceDominatedBySolution(List<Solution> solutionList, Solution solution,
+			double horizontalBoundary, double verticalBoundary, Optimization optimization, int insertPlace){
+		
+		double total = 
+				computeTotalFitness(solutionList, horizontalBoundary, verticalBoundary, optimization);
+		
+		solutionList.remove(solution);
+		double remaining =
+				computeTotalFitness(solutionList, horizontalBoundary, verticalBoundary, optimization);
+		solutionList.add(insertPlace, solution);
+		
+		return total - remaining;
+	}
+	
 	private Fitness computeFitness(Solution dominatingSolution, double horizontalBoundary, double verticalBoundary, Optimization optimization){
 		
 		Fitness fitness = new Fitness();

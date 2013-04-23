@@ -28,7 +28,7 @@ public class ContinousSolutionsSet implements SolutionSet{
 	public ContinousSolutionsSet(int size, double decisionSpaceWidth, ObjectiveFunction objectiveFunction, Optimization optimization,
 			double horizontalBoundary, double verticalBoundary){
 		
-		solutions = new ArrayList<Solution>(size);
+		solutions = new LinkedList<Solution>();
 		this.size = size; 
 		
 		this.optimization = optimization;
@@ -65,7 +65,7 @@ public class ContinousSolutionsSet implements SolutionSet{
 	@Override
 	public SolutionSet getSetCopy() {
 		
-		List<Solution> solutionCopies = new ArrayList<Solution>(); 
+		List<Solution> solutionCopies = new LinkedList<Solution>(); 
 		for(Solution solution : solutions)
 			solutionCopies.add(solution.getSolutionCopy());
 		return new ContinousSolutionsSet(optimization, 
@@ -132,7 +132,7 @@ public class ContinousSolutionsSet implements SolutionSet{
 		FitnessEvaluator evaluator = new FitnessEvaluator(); 
 		Collections.sort(solutions);
 		evaluator.assignFitness(size, optimization, horizontalBoundary, verticalBoundary, this);
-		List<Solution> matingSelectionSolutionList = new ArrayList<Solution>(size); 
+		List<Solution> matingSelectionSolutionList = new LinkedList<Solution>(); 
 		for(int i=0; i<size; i++){
 			Solution solutionA = getRandomSolution(); 
 			Solution solutionB = getRandomSolution(); 
@@ -338,6 +338,5 @@ public class ContinousSolutionsSet implements SolutionSet{
 		return true; 
 		
 	}
-	
 
 }
