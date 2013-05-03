@@ -313,7 +313,7 @@ public class ContinousSolutionsSet implements SolutionSet{
 		System.out.println("total " + totalF);
 		
 	}
-
+/*
 	@Override
 	public boolean equals(Object solutionsSet){
 		
@@ -338,5 +338,5 @@ public class ContinousSolutionsSet implements SolutionSet{
 		return true; 
 		
 	}
-
+*/
 }

@@ -46,8 +46,8 @@ public class FitnessTest {
 		
 		fe.assignFitness(ss.getSolutions().size(), Optimization.MAXIMALIZATION, 0, 0, ss);
 		
-		assertEquals(ss.getSolutions().get(0).getFitness(),0.50,0.00001);
-		assertEquals(ss.getSolutions().get(1).getFitness(),0.18,0.00001);
+		assertEquals(ss.getSolutions().get(0).getFitness(),0.18,0.00001);
+		assertEquals(ss.getSolutions().get(1).getFitness(),0.50,0.00001);
 
 
 	}

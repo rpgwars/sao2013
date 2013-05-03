@@ -87,7 +87,7 @@ public class ContinousSolution implements Solution{
 		return objectiveFunction;
 	}
 
-	
+	/*
 	@Override 
 	public boolean equals(Object solution){
 		
@@ -102,7 +102,7 @@ public class ContinousSolution implements Solution{
 			return false; 
 		return true; 
 	}
-	
+	*/
 	
 	
 

@@ -104,10 +104,11 @@ public class FitnessEvaluator {
 	
 	public double computeTotalFitness(List<Solution> solutionList, double horizontalBoundary, double verticalBoundary, Optimization optimization){
 		double totalFitness = 0; 
+		List<Solution> tmpSolutions = new ArrayList<Solution>(solutionList.size());
+		tmpSolutions.addAll(solutionList);
+		optimization.removeDominatedSolutions(tmpSolutions);
 		
-		List<Solution> dominatedSolutions = optimization.removeDominatedSolutions(solutionList);
-		
-		for(Solution dominatingSolution : solutionList){
+		for(Solution dominatingSolution : tmpSolutions){
 			Fitness fitness = computeFitness(dominatingSolution, horizontalBoundary, verticalBoundary, optimization);
 			
 			totalFitness += fitness.fitness; 
@@ -116,7 +117,6 @@ public class FitnessEvaluator {
 		}
 		
 		//zdominowane musza wrocic, to jest opulacja calego zbioru
-		solutionList.addAll(dominatedSolutions);
 		return totalFitness;
 	}
 	

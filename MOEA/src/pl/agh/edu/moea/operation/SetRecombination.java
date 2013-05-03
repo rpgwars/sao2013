@@ -1,5 +1,6 @@
 package pl.agh.edu.moea.operation;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,11 +20,24 @@ public class SetRecombination {
 		Collections.sort(solutionsA);
 		Collections.sort(solutionsB);
 		
+		FitnessEvaluator fe = new FitnessEvaluator(); 
+		boolean fitnessImproved = true;
+		while(fitnessImproved && solutionsB.size() > 0){
+				double totalFitness = fe.computeTotalFitness(solutionsA, horizontalBoundary, verticalBoundary, optimization);
+				int worstPosition = removeWorstSolution(solutionsA, horizontalBoundary, verticalBoundary, optimization);
+				
+				
+		}
+		
+		
+		
+		
+		
 		return null;
 		
 	}
 	
-	private void removeWorstSolution(List<Solution> solutionsA, List<Solution> solutionsB, 
+	private int removeWorstSolution(List<Solution> solutionsA, 
 			double horizontalBoundary, double verticalBoundary, Optimization optimization){
 		
 		
@@ -42,19 +56,46 @@ public class SetRecombination {
 			i++;
 		}
 		
-		solutionsA.remove(solutionWithWorstDominatedSpace);
+		return solutionWithWorstDominatedSpace;
 		
 	}
 	
-	private double insertBestSolution(List<Solution> solutionsA, List<Solution> solutionsB){
+	private int selectBestSolution(List<Solution> solutionsA, List<Solution> solutionsB,
+			double horizontalBoundary, double verticalBoundary, Optimization optimization){
 		
+		double maxTotalFitness = 0; 
+		int bestSolutionPosition = 0; 
+		int currentSolutionPosition = 0; 
+		List<Solution> tmpSolutions = new ArrayList<Solution>(solutionsA.size());
 		for(Solution solutionToInsert : solutionsB){
-
-			//Collections.binarySearch(solutionsA, solutionToInsert.getObjectiveVector()[0])
+			tmpSolutions.clear();
+			tmpSolutions.addAll(solutionsA);
 			
+			int insertionPosition = 0; 
+			for(Solution solution : tmpSolutions){
+				if(solution.getObjectiveVector()[0] < solutionToInsert.getObjectiveVector()[0] && optimization == Optimization.MAXIMALIZATION){
+					insertionPosition++;
+					break; 
+				}
+				if(solution.getObjectiveVector()[0] > solutionToInsert.getObjectiveVector()[0] && optimization == Optimization.MINIMIZATION){
+					insertionPosition++; 
+					break;
+				}
+					 
+			}
+				
+			tmpSolutions.add(insertionPosition, solutionToInsert);
+			FitnessEvaluator fe = new FitnessEvaluator();
+			double totalFitness = fe.computeTotalFitness(tmpSolutions, horizontalBoundary, verticalBoundary, optimization);
+			if(totalFitness > maxTotalFitness){
+				maxTotalFitness = totalFitness;
+				bestSolutionPosition = currentSolutionPosition;
+			}
+				
+			currentSolutionPosition++; 
 		}
 		
-		return -100;
+		return bestSolutionPosition;
 	}
-
+	
 }
