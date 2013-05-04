@@ -6,6 +6,7 @@ import java.util.List;
 
 import pl.agh.edu.moea.fitness.FitnessEvaluator;
 import pl.agh.edu.moea.main.Optimization;
+import pl.agh.edu.moea.set.ContinousSolutionsSet;
 import pl.agh.edu.moea.set.Solution;
 import pl.agh.edu.moea.set.SolutionSet;
 
@@ -23,17 +24,31 @@ public class SetRecombination {
 		FitnessEvaluator fe = new FitnessEvaluator(); 
 		boolean fitnessImproved = true;
 		while(fitnessImproved && solutionsB.size() > 0){
-				double totalFitness = fe.computeTotalFitness(solutionsA, horizontalBoundary, verticalBoundary, optimization);
-				int worstPosition = removeWorstSolution(solutionsA, horizontalBoundary, verticalBoundary, optimization);
 				
+				double totalFitness = fe.computeTotalFitness(solutionsA, horizontalBoundary, verticalBoundary, optimization,-1);
+				int worstPosition = removeWorstSolution(solutionsA, horizontalBoundary, verticalBoundary, optimization);
+				Solution worstSolution = solutionsA.remove(worstPosition);
+				int bestPosition = selectBestSolution(solutionsA, solutionsB, horizontalBoundary, verticalBoundary, optimization);
+				
+				 
+				Solution bestSolution = solutionsB.remove(bestPosition);
+				
+				int bestSolutionInsertionPosition = getInsertionPosition(solutionsA, bestSolution, optimization);
+				solutionsA.add(bestSolutionInsertionPosition, bestSolution);
+				double newTotalFitness = fe.computeTotalFitness(solutionsA, horizontalBoundary, verticalBoundary, optimization,-1);
+				
+				
+				if(totalFitness > newTotalFitness){
+					
+					fitnessImproved = false; 
+					solutionsA.remove(bestSolutionInsertionPosition);
+					solutionsA.add(worstPosition, worstSolution);
+				}
 				
 		}
 		
-		
-		
-		
-		
-		return null;
+		return new ContinousSolutionsSet(optimization, 
+				horizontalBoundary, verticalBoundary, solutionsA);
 		
 	}
 	
@@ -46,8 +61,9 @@ public class SetRecombination {
 		double min = Double.MAX_VALUE;
 		int solutionWithWorstDominatedSpace = 0;
 		for(Solution solution : solutionsA){
-			double dominatedSpace = fitnessEvaluator.computeObjectiveSpaceDominatedBySolution(solutionsA, solution,
+			double dominatedSpace = fitnessEvaluator.computeObjectiveSpaceDominatedBySolution(solutionsA, 
 					horizontalBoundary, verticalBoundary, optimization, i);
+			
 			
 			if(dominatedSpace < min){
 				min = dominatedSpace;
@@ -66,27 +82,16 @@ public class SetRecombination {
 		double maxTotalFitness = 0; 
 		int bestSolutionPosition = 0; 
 		int currentSolutionPosition = 0; 
-		List<Solution> tmpSolutions = new ArrayList<Solution>(solutionsA.size());
+		List<Solution> tmpSolutions = new ArrayList<Solution>(solutionsA.size() + 1);
 		for(Solution solutionToInsert : solutionsB){
 			tmpSolutions.clear();
 			tmpSolutions.addAll(solutionsA);
 			
-			int insertionPosition = 0; 
-			for(Solution solution : tmpSolutions){
-				if(solution.getObjectiveVector()[0] < solutionToInsert.getObjectiveVector()[0] && optimization == Optimization.MAXIMALIZATION){
-					insertionPosition++;
-					break; 
-				}
-				if(solution.getObjectiveVector()[0] > solutionToInsert.getObjectiveVector()[0] && optimization == Optimization.MINIMIZATION){
-					insertionPosition++; 
-					break;
-				}
-					 
-			}
+			int insertionPosition = getInsertionPosition(tmpSolutions, solutionToInsert, optimization);
 				
 			tmpSolutions.add(insertionPosition, solutionToInsert);
 			FitnessEvaluator fe = new FitnessEvaluator();
-			double totalFitness = fe.computeTotalFitness(tmpSolutions, horizontalBoundary, verticalBoundary, optimization);
+			double totalFitness = fe.computeTotalFitness(tmpSolutions, horizontalBoundary, verticalBoundary, optimization,-1);
 			if(totalFitness > maxTotalFitness){
 				maxTotalFitness = totalFitness;
 				bestSolutionPosition = currentSolutionPosition;
@@ -96,6 +101,28 @@ public class SetRecombination {
 		}
 		
 		return bestSolutionPosition;
+	}
+	
+	private int getInsertionPosition(List<Solution> solutions, Solution solutionToInsert, Optimization optimization){
+		int insertionPosition = 0;
+		boolean changed; 
+		for(Solution solution : solutions){
+			changed=false; 
+			if(solution.getObjectiveVector()[0] < solutionToInsert.getObjectiveVector()[0] && optimization == Optimization.MAXIMALIZATION){
+				insertionPosition++;
+				changed = true; 
+			}
+			if(solution.getObjectiveVector()[0] < solutionToInsert.getObjectiveVector()[0] && optimization == Optimization.MINIMIZATION){
+				insertionPosition++;
+				changed = true; 
+				
+			}
+			if(!changed)
+				break; 
+				 
+		}
+		
+		return insertionPosition;
 	}
 	
 }

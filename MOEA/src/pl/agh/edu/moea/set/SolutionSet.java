@@ -1,5 +1,6 @@
 package pl.agh.edu.moea.set;
 
+import java.util.Comparator;
 import java.util.List;
 
 import pl.agh.edu.moea.main.Optimization;
@@ -14,6 +15,7 @@ public interface SolutionSet {
 	void mutate(double upperBoud, double lowerBound, double probabilityOfMutation, int distributionIndex, int nrOfGenerations);
 	void printFitness();
 	SolutionSet getSetCopy();
+	Comparator getComparator(); 
 	
 	
 

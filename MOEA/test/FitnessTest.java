@@ -14,6 +14,7 @@ import pl.agh.edu.moea.set.SolutionSet;
 public class FitnessTest {
 
 	private SolutionSet ss; 
+	private SolutionSet ss2; 
 	private FitnessEvaluator fe; 
 	
 	
@@ -37,10 +38,36 @@ public class FitnessTest {
 		ss.getSolutions().get(0).setDecisionVector(0.2);
 		ss.getSolutions().get(1).setDecisionVector(0.6);
 		
+		ss2 = new ContinousSolutionsSet(2, 1, new ObjectiveFunction() {
+			
+			@Override
+			public double[] getObjectiveSpaceSolutionValues(Solution solution) {
+				double[] objV = new double[2];
+				objV[0] = solution.getDecisionVector();
+				objV[1] = solution.getDecisionVector();
+				return objV; 
+						
+				
+			}
+		},null,1,1);
 		
+		fe = new FitnessEvaluator();
+		ss2.getSolutions().get(0).setDecisionVector(0.3);
+		ss2.getSolutions().get(1).setDecisionVector(0.6);
 	}
 	
 
+	@Test
+	public void fitnessTestMinimization(){
+		
+		fe.assignFitness(ss2.getSolutions().size(), Optimization.MINIMIZATION, 1, 1, ss2);
+		
+		assertEquals(ss2.getSolutions().get(0).getFitness(),0.575,0.00001);
+		assertEquals(ss2.getSolutions().get(1).getFitness(),0.245,0.00001);
+
+
+	}
+	
 	@Test
 	public void fitnessTestMaximization(){
 		

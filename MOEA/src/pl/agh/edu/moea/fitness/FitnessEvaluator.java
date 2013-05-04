@@ -31,7 +31,7 @@ public class FitnessEvaluator {
 		
 		int solutionWithoutFitness = 0; 
 		Collections.sort(solutions);
-		double totalSetFitness = computeTotalFitness(solutions, originalHorizontalBoundary, originalVerticalBoundary, optimization);
+		double totalSetFitness = computeTotalFitness(solutions, originalHorizontalBoundary, originalVerticalBoundary, optimization, -1);
 		List<Solution> tmp = new ArrayList<Solution>(solutions.size());
 		List<Solution> tmp2 = new ArrayList<Solution>(solutions.size());
 		tmp2.addAll(solutions);
@@ -102,18 +102,27 @@ public class FitnessEvaluator {
 	
 	}
 	
-	public double computeTotalFitness(List<Solution> solutionList, double horizontalBoundary, double verticalBoundary, Optimization optimization){
+	public double computeTotalFitness(List<Solution> solutionList, double horizontalBoundary, double verticalBoundary,
+			Optimization optimization, int ignoreSolutionNr){
 		double totalFitness = 0; 
 		List<Solution> tmpSolutions = new ArrayList<Solution>(solutionList.size());
 		tmpSolutions.addAll(solutionList);
+		
+		if(ignoreSolutionNr != -1){
+			tmpSolutions.remove(ignoreSolutionNr);
+		}
+		
 		optimization.removeDominatedSolutions(tmpSolutions);
 		
+
 		for(Solution dominatingSolution : tmpSolutions){
-			Fitness fitness = computeFitness(dominatingSolution, horizontalBoundary, verticalBoundary, optimization);
 			
+			Fitness fitness = computeFitness(dominatingSolution, horizontalBoundary, verticalBoundary, optimization);
+		
 			totalFitness += fitness.fitness; 
 			horizontalBoundary = fitness.horizontalBoundary; 
 			verticalBoundary = fitness.verticalBoundary;
+			
 		}
 		
 		//zdominowane musza wrocic, to jest opulacja calego zbioru
@@ -121,16 +130,16 @@ public class FitnessEvaluator {
 	}
 	
 	
-	public double computeObjectiveSpaceDominatedBySolution(List<Solution> solutionList, Solution solution,
-			double horizontalBoundary, double verticalBoundary, Optimization optimization, int insertPlace){
+	public double computeObjectiveSpaceDominatedBySolution(List<Solution> solutionList, 
+			double horizontalBoundary, double verticalBoundary, Optimization optimization, int solutionPosition){
 		
 		double total = 
-				computeTotalFitness(solutionList, horizontalBoundary, verticalBoundary, optimization);
+				computeTotalFitness(solutionList, horizontalBoundary, verticalBoundary, optimization, -1);
 		
-		solutionList.remove(solution);
+		
 		double remaining =
-				computeTotalFitness(solutionList, horizontalBoundary, verticalBoundary, optimization);
-		solutionList.add(insertPlace, solution);
+				computeTotalFitness(solutionList, horizontalBoundary, verticalBoundary, optimization, solutionPosition);
+
 		
 		return total - remaining;
 	}

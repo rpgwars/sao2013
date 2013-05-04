@@ -339,4 +339,50 @@ public class ContinousSolutionsSet implements SolutionSet{
 		
 	}
 */
+
+	private static Comparator<ContinousSolutionsSet> comparator = null;
+	@Override
+	public Comparator getComparator() {
+		if(comparator == null)
+			comparator = new ContinousSolutionsSetComparator(horizontalBoundary, verticalBoundary, optimization); 
+		return comparator;
+	}
+	
+	class ContinousSolutionsSetComparator implements Comparator<ContinousSolutionsSet>{
+		
+		FitnessEvaluator fe = new FitnessEvaluator();
+		private double horizontalBoundary; 
+		private double verticalBoundary; 
+		private Optimization optimization; 
+		
+		public ContinousSolutionsSetComparator(double horizontalBoundary, double verticalBoundary, Optimization optimization){
+			this.horizontalBoundary = horizontalBoundary;
+			this.verticalBoundary = verticalBoundary;
+			this.optimization = optimization;
+		}
+		
+		@Override
+		public int compare(ContinousSolutionsSet s1, ContinousSolutionsSet s2) {
+			List<Solution> l1 =  s1.getSolutions();
+			List<Solution> l2 =  s2.getSolutions();
+			double f1 = fe.computeTotalFitness(l1, horizontalBoundary, verticalBoundary, optimization, -1);
+			double f2 = fe.computeTotalFitness(l2, horizontalBoundary, verticalBoundary, optimization, -1);
+			double dif = f1 - f2; 
+//			System.out.println("sol " +f1);
+//			for(Solution solution : l1)
+//				System.out.println(solution.getDecisionVector());
+//			System.out.println("sol " +f2);
+//			for(Solution solution : l2)
+//				System.out.println(solution.getDecisionVector());
+//			System.out.println("\n\n");
+			if(dif < 0)
+				return 1; 
+			if(dif > 0)
+				return -1; 
+			return 0; 
+			
+		}
+		
+	}
+	
 }
