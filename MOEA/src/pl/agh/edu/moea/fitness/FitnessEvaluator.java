@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.Accessor.SetterOnlyReflection;
 
 import pl.agh.edu.moea.main.Optimization;
 import pl.agh.edu.moea.set.Solution;
@@ -149,14 +148,14 @@ public class FitnessEvaluator {
 		Fitness fitness = new Fitness();
 		switch(optimization){
 		case MAXIMALIZATION:
-			fitness.fitness = (dominatingSolution.getObjectiveVector()[1]-horizontalBoundary)*(dominatingSolution.getObjectiveVector()[0]-verticalBoundary);
+			fitness.fitness = Math.abs((dominatingSolution.getObjectiveVector()[1]-horizontalBoundary)*(dominatingSolution.getObjectiveVector()[0]-verticalBoundary));
 			fitness.verticalBoundary = dominatingSolution.getObjectiveVector()[0];
 			fitness.horizontalBoundary = horizontalBoundary;
 			return fitness;
 			
 		case MINIMIZATION:
 			
-			fitness.fitness = (verticalBoundary - dominatingSolution.getObjectiveVector()[0])*(horizontalBoundary - dominatingSolution.getObjectiveVector()[1]);
+			fitness.fitness = Math.abs((verticalBoundary - dominatingSolution.getObjectiveVector()[0])*(horizontalBoundary - dominatingSolution.getObjectiveVector()[1]));
 			fitness.verticalBoundary = verticalBoundary;
 			fitness.horizontalBoundary = dominatingSolution.getObjectiveVector()[1];
 			return fitness;
