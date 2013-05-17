@@ -2,6 +2,7 @@ package pl.agh.edu.moea.main;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.jfree.data.xy.XYSeries;
 
 import pl.agh.edu.moea.objective.ObjectiveFunction;
 import pl.agh.edu.moea.operation.SetSelection;
@@ -13,6 +14,7 @@ public class MOEA {
 	
 	private Parameters parameters;
 	private List<SolutionSet> solutionsSetPopulation;
+        private ArrayList<ArrayList<XYSeries>> results = new ArrayList<>();
 	
 	public MOEA(Parameters parameters){
 		this.parameters = parameters;
@@ -52,18 +54,31 @@ public class MOEA {
 					setSelection.doMatingAndEnvironmentalSelection(solutionsSetPopulation,
 							parameters.getFunction1Boundary(),parameters.getFunction2Boundary(), parameters.getOptimization());
 				
-			for(SolutionSet ss : solutionsSetPopulation){
+                        XYSeries func1 = new XYSeries("Func1 - " + i);
+                        XYSeries func2 = new XYSeries("Func2 - " + i);
+                        
+			for(SolutionSet ss : solutionsSetPopulation) {
 				System.out.println("set ");
-				for(Solution s : ss.getSolutions())
+				for(Solution s : ss.getSolutions()) {
+                                        func1.add(s.getDecisionVector(), s.getObjectiveVector()[0]);
+                                        func2.add(s.getDecisionVector(), s.getObjectiveVector()[1]);
 					System.out.println("decision: " +  s.getDecisionVector()); 
+                                }     
 			}
+                        ArrayList<XYSeries> oneStepSolutions = new ArrayList<>();
+                        oneStepSolutions.add(func1);
+                        oneStepSolutions.add(func2);
+                        results.add(oneStepSolutions);
 			
 			solutionsSetPopulation = newPopulation;
 		}
 		
 		
 	}
+        
+        public ArrayList<ArrayList<XYSeries>> getResults() {
+            return results;
+        }
 	
 	
-
 }
