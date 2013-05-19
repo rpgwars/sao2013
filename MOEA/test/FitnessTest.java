@@ -26,34 +26,34 @@ public class FitnessTest {
 			@Override
 			public double[] getObjectiveSpaceSolutionValues(Solution solution) {
 				double[] objV = new double[2];
-				objV[0] = solution.getDecisionVector();
-				objV[1] = solution.getDecisionVector();
+				objV[0] = solution.getDecisionVector()[0];
+				objV[1] = solution.getDecisionVector()[0];
 				return objV; 
 						
 				
 			}
-		},null,0,0);
+		},null,0,0,1);
 		
 		fe = new FitnessEvaluator();
-		ss.getSolutions().get(0).setDecisionVector(0.2);
-		ss.getSolutions().get(1).setDecisionVector(0.6);
+		ss.getSolutions().get(0).setDecisionVector(new double[] { 0.2 });
+		ss.getSolutions().get(1).setDecisionVector(new double[] { 0.6 });
 		
 		ss2 = new ContinousSolutionsSet(2, 1, new ObjectiveFunction() {
 			
 			@Override
 			public double[] getObjectiveSpaceSolutionValues(Solution solution) {
 				double[] objV = new double[2];
-				objV[0] = solution.getDecisionVector();
-				objV[1] = solution.getDecisionVector();
+				objV[0] = solution.getDecisionVector()[0];
+				objV[1] = solution.getDecisionVector()[0];
 				return objV; 
 						
 				
 			}
-		},null,1,1);
+		},null,1,1,1);
 		
 		fe = new FitnessEvaluator();
-		ss2.getSolutions().get(0).setDecisionVector(0.3);
-		ss2.getSolutions().get(1).setDecisionVector(0.6);
+		ss2.getSolutions().get(0).setDecisionVector(new double[] { 0.3 });
+		ss2.getSolutions().get(1).setDecisionVector(new double[] { 0.6 });
 	}
 	
 
@@ -87,19 +87,19 @@ public class FitnessTest {
 			@Override
 			public double[] getObjectiveSpaceSolutionValues(Solution solution) {
 				double[] objV = new double[2];
-				objV[0] = 1 - solution.getDecisionVector();
-				objV[1] = solution.getDecisionVector();
+				objV[0] = 1 - solution.getDecisionVector()[0];
+				objV[1] = solution.getDecisionVector()[0];
 				return objV; 
 						
 				
 			}
-		},null,0,0);
+		},null,0,0,1);
 		
 		fe = new FitnessEvaluator();
-		ss.getSolutions().get(0).setDecisionVector(0.2);
-		ss.getSolutions().get(1).setDecisionVector(0.6);
-		ss.getSolutions().get(2).setDecisionVector(0.6);
-		ss.getSolutions().get(3).setDecisionVector(0.6);
+		ss.getSolutions().get(0).setDecisionVector(new double[] { 0.2 });
+		ss.getSolutions().get(1).setDecisionVector(new double[] { 0.6 });
+		ss.getSolutions().get(2).setDecisionVector(new double[] { 0.6 });
+		ss.getSolutions().get(3).setDecisionVector(new double[] { 0.6 });
 		Solution s = ss.getSolutions().get(0);
 		
 		

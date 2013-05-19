@@ -26,7 +26,7 @@ public class ContinousSolutionsSet implements SolutionSet{
 	
 	
 	public ContinousSolutionsSet(int size, double decisionSpaceWidth, ObjectiveFunction objectiveFunction, Optimization optimization,
-			double horizontalBoundary, double verticalBoundary){
+			double horizontalBoundary, double verticalBoundary, int decisionSpaceDimension){
 		
 		solutions = new LinkedList<Solution>();
 		this.size = size; 
@@ -36,7 +36,7 @@ public class ContinousSolutionsSet implements SolutionSet{
 		this.verticalBoundary = verticalBoundary;
 		
 		for(int i = 0; i<size; i++){
-			solutions.add(new ContinousSolution(decisionSpaceWidth, objectiveFunction));
+			solutions.add(new ContinousSolution(decisionSpaceWidth, objectiveFunction, decisionSpaceDimension));
 		}
 		
 		random = new Random(); 
@@ -140,14 +140,14 @@ public class ContinousSolutionsSet implements SolutionSet{
 			if(solutionA.getFitness() > solutionB.getFitness()){
 				
 				newCs.setObjectiveFunction(solutionA.getObjectiveFunction());
-				newCs.setDecisionVector(solutionA.getDecisionVector());
+				newCs.setDecisionVector(solutionA.getDecisionVector().clone());
 				
 			}
 				
 			else{
 				
 				newCs.setObjectiveFunction(solutionB.getObjectiveFunction());
-				newCs.setDecisionVector(solutionB.getDecisionVector());
+				newCs.setDecisionVector(solutionB.getDecisionVector().clone());
 				
 			}
 			
@@ -163,10 +163,10 @@ public class ContinousSolutionsSet implements SolutionSet{
 		
 		return solutions.get(random.nextInt(solutions.size()));
 	}
-
+	
 	@Override
 	public void doBinaryCrossover(double probability, double[] boundaries) {
-		
+		/*
 		
 		for(int i=0; i<solutions.size(); i++){
 			if(probability > random.nextDouble()){
@@ -207,8 +207,9 @@ public class ContinousSolutionsSet implements SolutionSet{
 			}
 		}
 		
-		
+		*/
 	}
+	
 
 	@Override
 	public void mutate(double upperBound, double lowerBound,
@@ -313,7 +314,7 @@ public class ContinousSolutionsSet implements SolutionSet{
 		System.out.println("total " + totalF);
 		
 	}
-/*
+	/*
 	@Override
 	public boolean equals(Object solutionsSet){
 		
@@ -338,7 +339,7 @@ public class ContinousSolutionsSet implements SolutionSet{
 		return true; 
 		
 	}
-*/
+	*/
 
 	private static Comparator<ContinousSolutionsSet> comparator = null;
 	@Override

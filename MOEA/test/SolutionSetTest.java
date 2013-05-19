@@ -27,24 +27,24 @@ public class SolutionSetTest {
 			@Override
 			public double[] getObjectiveSpaceSolutionValues(Solution solution) {
 				double[] objV = new double[2];
-				objV[0] = solution.getDecisionVector();
-				objV[1] = 1 - solution.getDecisionVector();
+				objV[0] = solution.getDecisionVector()[0];
+				objV[1] = 1 - solution.getDecisionVector()[0];
 				return objV; 
 						
 				
 			}
-		},null,0,0);
+		},null,0,0,1);
 	
-		ss.getSolutions().get(0).setDecisionVector(0.0);
-		ss.getSolutions().get(1).setDecisionVector(0.1);
-		ss.getSolutions().get(2).setDecisionVector(0.2);
-		ss.getSolutions().get(3).setDecisionVector(0.3);
-		ss.getSolutions().get(4).setDecisionVector(0.4);
-		ss.getSolutions().get(5).setDecisionVector(0.5);
-		ss.getSolutions().get(6).setDecisionVector(0.6);
-		ss.getSolutions().get(7).setDecisionVector(0.7);
-		ss.getSolutions().get(8).setDecisionVector(0.8);
-		ss.getSolutions().get(9).setDecisionVector(0.9);
+		ss.getSolutions().get(0).setDecisionVector(new double[] { 0.0 });
+		ss.getSolutions().get(1).setDecisionVector(new double[] { 0.1 });
+		ss.getSolutions().get(2).setDecisionVector(new double[] { 0.2 });
+		ss.getSolutions().get(3).setDecisionVector(new double[] { 0.3 });
+		ss.getSolutions().get(4).setDecisionVector(new double[] { 0.4 });
+		ss.getSolutions().get(5).setDecisionVector(new double[] { 0.5 });
+		ss.getSolutions().get(6).setDecisionVector(new double[] { 0.6 });
+		ss.getSolutions().get(7).setDecisionVector(new double[] { 0.7 });
+		ss.getSolutions().get(8).setDecisionVector(new double[] { 0.8 });
+		ss.getSolutions().get(9).setDecisionVector(new double[] { 0.9 });
 
 		
 	}
@@ -59,9 +59,8 @@ public class SolutionSetTest {
 			result.add(ss.getSolutions().get(nr));
 			for(int k = 0; k < result.size(); k++){
 				for(int l = k + 1 ; l< result.size(); l++ ){
-					if(k==l)
+					if(result.get(k).getDecisionVector()[0] == result.get(l).getDecisionVector()[0])
 						fail("solutions are not distinct");
-					
 				}
 					
 			}

@@ -27,7 +27,7 @@ public class SetEqualityTest {
 				return objV;
 				 
 			}
-		},Optimization.MAXIMALIZATION,0,0);
+		},Optimization.MAXIMALIZATION,0,0,2);
 	}
 	
 	
@@ -39,11 +39,11 @@ public class SetEqualityTest {
 			fail("Sets should stay equal");
 		
 		
-		anotherSet.getSolutions().get(0).setDecisionVector(anotherSet.getSolutions().get(0).getDecisionVector()/2.0);
+		anotherSet.getSolutions().get(0).getDecisionVector()[0]= anotherSet.getSolutions().get(0).getDecisionVector()[0]/2.0;
 		if(anotherSet.equals(set))
 			fail("Sets are diffrent");
 		
-		set.getSolutions().get(0).setDecisionVector(set.getSolutions().get(0).getDecisionVector()/2.0);
+		set.getSolutions().get(0).getDecisionVector()[0] = set.getSolutions().get(0).getDecisionVector()[0]/2.0;
 		if(!anotherSet.equals(set))
 			fail("Sets should stay equal");
 	}

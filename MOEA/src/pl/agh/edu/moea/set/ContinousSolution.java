@@ -6,15 +6,17 @@ import pl.agh.edu.moea.objective.ObjectiveFunction;
 
 public class ContinousSolution implements Solution{
 	
-	private double solution; 
+	private double[] solution; 
 	private ObjectiveFunction objectiveFunction;
 	private double fitness; 
 	private double[] objectiveVector; 
 	
-	public ContinousSolution(double decisionSpaceWidth, ObjectiveFunction objectiveFunction){
+	public ContinousSolution(double decisionSpaceWidth, ObjectiveFunction objectiveFunction,int decisionSpaceDimension){
 		
 		Random random = new Random();
-		solution = random.nextDouble()*decisionSpaceWidth; 
+		solution = new double[decisionSpaceDimension];
+		for(int i =0; i<decisionSpaceDimension; i++)
+			solution[i] = random.nextDouble()*decisionSpaceWidth; 
 		this.objectiveFunction = objectiveFunction;
 		this.objectiveVector = objectiveFunction.getObjectiveSpaceSolutionValues(this);
 		
@@ -28,7 +30,7 @@ public class ContinousSolution implements Solution{
 	public Solution getSolutionCopy() {
 		ContinousSolution copy = new ContinousSolution();
 		copy.setObjectiveFunction(getObjectiveFunction());
-		copy.setDecisionVector(getDecisionVector());
+		copy.setDecisionVector(getDecisionVector().clone());
 		return copy;
 	}
 
@@ -48,7 +50,7 @@ public class ContinousSolution implements Solution{
 
 
 	@Override
-	public double getDecisionVector() {
+	public double[] getDecisionVector() {
 		return solution;
 	}
 
@@ -70,7 +72,7 @@ public class ContinousSolution implements Solution{
 
 
 	@Override
-	public double setDecisionVector(double decisionVector) {
+	public double setDecisionVector(double[] decisionVector) {
 		this.solution = decisionVector;
 		this.objectiveVector = objectiveFunction.getObjectiveSpaceSolutionValues(this);
 		return 0;
@@ -98,8 +100,9 @@ public class ContinousSolution implements Solution{
 		
 		if(anotherSolution.objectiveFunction != objectiveFunction)
 			return false; 
-		if(anotherSolution.solution != this.solution)
-			return false; 
+		for(int i =0; i< this.solution.length; i++)
+			if(anotherSolution.solution[i] != this.solution[i])
+				return false; 
 		return true; 
 	}
 	*/

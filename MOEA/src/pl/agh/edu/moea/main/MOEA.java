@@ -25,11 +25,13 @@ public class MOEA {
 		Optimization optimization = parameters.getOptimization();
 		double verticalBoundary = parameters.getFunction1Boundary();
 		double horizontalBoundary = parameters.getFunction2Boundary(); 
+		int decisionSpaceDimension = parameters.getDecisionSpaceDimension();
 		
 		solutionsSetPopulation = new ArrayList<SolutionSet>(nrOfSetsInpopulation);
 		for(int i = 0; i<nrOfSetsInpopulation; i++){
 			solutionsSetPopulation.add(
-					new ContinousSolutionsSet(nrOfSolutionsInSet, 1, objectiveFunction,optimization,verticalBoundary,horizontalBoundary));
+					new ContinousSolutionsSet(nrOfSolutionsInSet, 1, objectiveFunction,optimization,verticalBoundary,horizontalBoundary,
+							decisionSpaceDimension));
 		}
 		
 		
@@ -60,9 +62,9 @@ public class MOEA {
 			for(SolutionSet ss : solutionsSetPopulation) {
 				System.out.println("set ");
 				for(Solution s : ss.getSolutions()) {
-                                        func1.add(s.getDecisionVector(), s.getObjectiveVector()[0]);
-                                        func2.add(s.getDecisionVector(), s.getObjectiveVector()[1]);
-					System.out.println("decision: " +  s.getDecisionVector()); 
+                                        func1.add(s.getDecisionVector()[0], s.getObjectiveVector()[0]);
+                                        func2.add(s.getDecisionVector()[0], s.getObjectiveVector()[1]);
+					System.out.println("decision: " +  s.getDecisionVector()[0] + " " + s.getDecisionVector()[1]); 
                                 }     
 			}
                         ArrayList<XYSeries> oneStepSolutions = new ArrayList<>();
@@ -71,6 +73,7 @@ public class MOEA {
                         results.add(oneStepSolutions);
 			
 			solutionsSetPopulation = newPopulation;
+			
 		}
 		
 		

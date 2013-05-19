@@ -15,6 +15,7 @@ public class Parameters {
 	private int polynomialIdstributionIndex; 
 	private double decisionSpaceWidth; 
 	private double probabilitiyOfMutation;
+	private int decisionSpaceDimension;
 	
 	public int getNrOfSetsInPopulation() {
 		return nrOfSetsInPopulation;
@@ -81,6 +82,12 @@ public class Parameters {
 	}
 	public void setProbabilitiyOfMutation(double probabilitiyOfMutation) {
 		this.probabilitiyOfMutation = probabilitiyOfMutation;
+	}
+	public int getDecisionSpaceDimension() {
+		return decisionSpaceDimension;
+	}
+	public void setDecisionSpaceDimension(int decisionSpaceDimension) {
+		this.decisionSpaceDimension = decisionSpaceDimension;
 	}
 	
 	

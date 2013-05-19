@@ -30,51 +30,51 @@ public class RecombinationTest {
 			@Override
 			public double[] getObjectiveSpaceSolutionValues(Solution solution) {
 				double[] objV = new double[2];
-				objV[0] = solution.getDecisionVector();
-				objV[1] = 1 - solution.getDecisionVector();
+				objV[0] = solution.getDecisionVector()[0];
+				objV[1] = 1 - solution.getDecisionVector()[0];
 				return objV; 
 						
 				
 			}
-		},null,0,0);
+		},null,0,0,1);
 		
-		ss1.getSolutions().get(0).setDecisionVector(0.2);
-		ss1.getSolutions().get(1).setDecisionVector(0.6);
-		ss1.getSolutions().get(2).setDecisionVector(0.7);
+		ss1.getSolutions().get(0).setDecisionVector(new double[] { 0.2 });
+		ss1.getSolutions().get(1).setDecisionVector(new double[] { 0.6 });
+		ss1.getSolutions().get(2).setDecisionVector(new double[] { 0.7 });
 		
 		ss2 = new ContinousSolutionsSet(3, 1, new ObjectiveFunction() {
 			
 			@Override
 			public double[] getObjectiveSpaceSolutionValues(Solution solution) {
 				double[] objV = new double[2];
-				objV[0] = solution.getDecisionVector();
-				objV[1] = 1 - solution.getDecisionVector();
+				objV[0] = solution.getDecisionVector()[0];
+				objV[1] = 1 - solution.getDecisionVector()[0];
 				return objV; 
 						
 				
 			}
-		},null,0,0);
+		},null,0,0,1);
 		
-		ss2.getSolutions().get(0).setDecisionVector(0.4);
-		ss2.getSolutions().get(1).setDecisionVector(0.5);
-		ss2.getSolutions().get(2).setDecisionVector(0.6);
+		ss2.getSolutions().get(0).setDecisionVector(new double[] { 0.4 });
+		ss2.getSolutions().get(1).setDecisionVector(new double[] { 0.5 });
+		ss2.getSolutions().get(2).setDecisionVector(new double[] { 0.6 });
 		
 		ss3 = new ContinousSolutionsSet(3, 1, new ObjectiveFunction() {
 			
 			@Override
 			public double[] getObjectiveSpaceSolutionValues(Solution solution) {
 				double[] objV = new double[2];
-				objV[0] = solution.getDecisionVector();
-				objV[1] = 1 - solution.getDecisionVector();
+				objV[0] = solution.getDecisionVector()[0];
+				objV[1] = 1 - solution.getDecisionVector()[0];
 				return objV; 
 						
 				
 			}
-		},null,1,1);
+		},null,1,1,1);
 		
-		ss3.getSolutions().get(0).setDecisionVector(0.2);
-		ss3.getSolutions().get(1).setDecisionVector(0.6);
-		ss3.getSolutions().get(2).setDecisionVector(0.7);
+		ss3.getSolutions().get(0).setDecisionVector(new double[] { 0.2 });
+		ss3.getSolutions().get(1).setDecisionVector(new double[] { 0.6 });
+		ss3.getSolutions().get(2).setDecisionVector(new double[] { 0.7 });
 		
 		
 		ss4 = new ContinousSolutionsSet(3, 1, new ObjectiveFunction() {
@@ -82,17 +82,17 @@ public class RecombinationTest {
 			@Override
 			public double[] getObjectiveSpaceSolutionValues(Solution solution) {
 				double[] objV = new double[2];
-				objV[0] = solution.getDecisionVector();
-				objV[1] = 1 - solution.getDecisionVector();
+				objV[0] = solution.getDecisionVector()[0];
+				objV[1] = 1 - solution.getDecisionVector()[0];
 				return objV; 
 						
 				
 			}
-		},null,1,1);
+		},null,1,1,1);
 		
-		ss4.getSolutions().get(0).setDecisionVector(0.4);
-		ss4.getSolutions().get(1).setDecisionVector(0.5);
-		ss4.getSolutions().get(2).setDecisionVector(0.6);
+		ss4.getSolutions().get(0).setDecisionVector(new double[] { 0.4 });
+		ss4.getSolutions().get(1).setDecisionVector(new double[] { 0.5 });
+		ss4.getSolutions().get(2).setDecisionVector(new double[] { 0.6 });
 		
 		
 	}

@@ -29,68 +29,68 @@ public class SetSelectionTest {
 			@Override
 			public double[] getObjectiveSpaceSolutionValues(Solution solution) {
 				double[] objV = new double[2];
-				objV[0] = solution.getDecisionVector();
-				objV[1] = 1 - solution.getDecisionVector();
+				objV[0] = solution.getDecisionVector()[0];
+				objV[1] = 1 - solution.getDecisionVector()[0];
 				return objV; 
 						
 				
 			}
-		},Optimization.MAXIMALIZATION,0,0);
+		},Optimization.MAXIMALIZATION,0,0,1);
 		
-		ss1.getSolutions().get(0).setDecisionVector(0.1);
-		ss1.getSolutions().get(1).setDecisionVector(0.1);
-		ss1.getSolutions().get(2).setDecisionVector(0.1);
+		ss1.getSolutions().get(0).setDecisionVector(new double[] { 0.1 });
+		ss1.getSolutions().get(1).setDecisionVector(new double[] { 0.1 });
+		ss1.getSolutions().get(2).setDecisionVector(new double[] { 0.1 });
 		
 		ss2 = new ContinousSolutionsSet(3, 1, new ObjectiveFunction() {
 			
 			@Override
 			public double[] getObjectiveSpaceSolutionValues(Solution solution) {
 				double[] objV = new double[2];
-				objV[0] = solution.getDecisionVector();
-				objV[1] = 1 - solution.getDecisionVector();
+				objV[0] = solution.getDecisionVector()[0];
+				objV[1] = 1 - solution.getDecisionVector()[0];
 				return objV; 
 						
 				
 			}
-		},Optimization.MAXIMALIZATION,0,0);
+		},Optimization.MAXIMALIZATION,0,0,1);
 		
-		ss2.getSolutions().get(0).setDecisionVector(0.75);
-		ss2.getSolutions().get(1).setDecisionVector(0.8);
-		ss2.getSolutions().get(2).setDecisionVector(0.9);
+		ss2.getSolutions().get(0).setDecisionVector(new double[] { 0.75 });
+		ss2.getSolutions().get(1).setDecisionVector(new double[] { 0.8 });
+		ss2.getSolutions().get(2).setDecisionVector(new double[] { 0.9 });
 		
 		ss3 = new ContinousSolutionsSet(3, 1, new ObjectiveFunction() {
 			
 			@Override
 			public double[] getObjectiveSpaceSolutionValues(Solution solution) {
 				double[] objV = new double[2];
-				objV[0] = solution.getDecisionVector();
-				objV[1] = 1 - solution.getDecisionVector();
+				objV[0] = solution.getDecisionVector()[0];
+				objV[1] = 1 - solution.getDecisionVector()[0];
 				return objV; 
 						
 				
 			}
-		},Optimization.MINIMIZATION,1,1);
+		},Optimization.MINIMIZATION,1,1,1);
 		
-		ss3.getSolutions().get(0).setDecisionVector(0.2);
-		ss3.getSolutions().get(1).setDecisionVector(0.3);
-		ss3.getSolutions().get(2).setDecisionVector(0.4);
+		ss3.getSolutions().get(0).setDecisionVector(new double[] { 0.2 });
+		ss3.getSolutions().get(1).setDecisionVector(new double[] { 0.3 });
+		ss3.getSolutions().get(2).setDecisionVector(new double[] { 0.4 });
 		
 		ss4 = new ContinousSolutionsSet(3, 1, new ObjectiveFunction() {
 			
 			@Override
 			public double[] getObjectiveSpaceSolutionValues(Solution solution) {
 				double[] objV = new double[2];
-				objV[0] = solution.getDecisionVector();
-				objV[1] = 1 - solution.getDecisionVector();
+				objV[0] = solution.getDecisionVector()[0];
+				objV[1] = 1 - solution.getDecisionVector()[0];
 				return objV; 
 						
 				
 			}
-		},Optimization.MINIMIZATION,1,1);
+		},Optimization.MINIMIZATION,1,1,1);
 		
-		ss4.getSolutions().get(0).setDecisionVector(0.5);
-		ss4.getSolutions().get(1).setDecisionVector(0.8);
-		ss4.getSolutions().get(2).setDecisionVector(0.9);
+		ss4.getSolutions().get(0).setDecisionVector(new double[] { 0.5 });
+		ss4.getSolutions().get(1).setDecisionVector(new double[] { 0.8 });
+		ss4.getSolutions().get(2).setDecisionVector(new double[] { 0.9 });
 	}
 	
 	
@@ -108,7 +108,7 @@ public class SetSelectionTest {
 		for(SolutionSet ss : result){
 			System.out.println("solutions set");
 			for(Solution solution : ss.getSolutions())
-				System.out.println(solution.getDecisionVector());
+				System.out.println(solution.getDecisionVector()[0]);
 		}
 		
 		FitnessEvaluator fe = new FitnessEvaluator(); 
@@ -131,7 +131,7 @@ public class SetSelectionTest {
 		for(SolutionSet ss : result){
 			System.out.println("solutions set");
 			for(Solution solution : ss.getSolutions())
-				System.out.println(solution.getDecisionVector());
+				System.out.println(solution.getDecisionVector()[0]);
 		}
 		
 		
